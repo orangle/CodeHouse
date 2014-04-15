@@ -1,0 +1,21 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单的一些基本操作</title>
+</head>
+<body>
+    <form action="#" id="userForm">
+        Username : <input type="text" value="" name="username">
+    </form>
+</body>
+<script t type="text/javascript">
+    //原始的获取DOM对象的方法
+    var form = document.getElementById('userForm');
+
+    //获取表单元素,最好使用element 的方法
+    var user_field = form.elements['username']
+    console.log(user_field);
+
+</script>
+</html>
