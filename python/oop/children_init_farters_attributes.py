@@ -1,7 +1,7 @@
 ﻿#-*- coding: utf-8 -*-
 #children_init_farters_attributes.py   python2.7.x
 '''
-子类初始化父类的属性, 父类中使用属性
+子类初始化父类的属性, 子类中覆盖了父类的属性
 '''
 
 class Farter(object):
