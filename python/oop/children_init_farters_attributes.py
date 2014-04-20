@@ -1,5 +1,6 @@
-﻿#-*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 #children_init_farters_attributes.py   python2.7.x
+#author: orangleliu       2014-04-18
 '''
 子类初始化父类的属性, 子类中覆盖了父类的属性
 '''
