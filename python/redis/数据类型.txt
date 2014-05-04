@@ -1,0 +1,35 @@
+﻿redis的存储方式是key：value
+这中数据结构和java中的map  python中的字典很类似
+
+value支持的五种数据类型：
+strings
+lists
+sets
+sorted sets
+hashes
+
+key在使用时候需要注意一下几点：
+key尽量要短（保持可读性），不要超过1024个字节
+key的命名尽量统一规范
+
+
+
+
+
+
+############################################
+redis的持久化： RDB  AOF
+Redis Database  , Append Only File
+
+RDB: 快照方式，恢复速度快，但是最后一次记录间隔的数据会丢失
+AOF: 操作日志的方式，这种方式恢复数据的完整性更高些
+也可以两种模式同时使用，不开启持久化的时候，redis就是个内存数据库。
+
+
+
+基本的入门看这篇文章感觉很受用：
+http://roclinux.cn/?p=3196
+
+
+
+
