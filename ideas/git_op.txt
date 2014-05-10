@@ -1,4 +1,4 @@
-记录下常用的git命令，原来是在windows下使用界面版的，现在切换到ubunut下很不适应
+﻿记录下常用的git命令，原来是在windows下使用界面版的，现在切换到ubunut下很不适应
 于是记录一些常用的命令，也为了以后使用方面。
 
 本地提交：git commit -m "initial import of some project"
@@ -12,3 +12,6 @@
 克隆远程仓库：git clone <repository url
 查看远程分支：git branch
 
+
+.gitignore
+在第一行编辑*.pyc 就不生效，如果改成第二行就可以使用了
