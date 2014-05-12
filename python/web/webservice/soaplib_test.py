@@ -14,7 +14,9 @@ http://www.cnblogs.com/grok/archive/2012/04/29/2476177.html
 
 http://www.cnblogs.com/lm3515/archive/2010/10/29/1864456.html
 http://www.cnblogs.com/macroxu-1982/archive/2009/12/23/1630415.html
-服务启动之后可以在浏览器： http://localhost:8001/?wsdl
+http://192.168.100.109:8000/webservices/SOAProvider/plsql/cux_ccih_yz/?wsdl
+
+服务启动之后可以在浏览器： http://localhost:7789/?wsdl
 得到一个xml文件，具体怎么解读还需要查看资料
 
 需要研究下怎么手动写一个http客户端来请求webservice
@@ -40,6 +42,7 @@ if __name__=='__main__':
         soap_application = soaplib.core.Application([HelloWorldService], 'tns')
         wsgi_application = wsgi.Application(soap_application)
         server = make_server('localhost', 7789, wsgi_application)
+        print 'soap server starting......'
         server.serve_forever()
     except ImportError:
         print "Error: example server code requires Python >= 2.5"
