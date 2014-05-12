@@ -16,7 +16,7 @@ import xml.dom.minidom as dm
 soap_host = '127.0.0.1'
 soap_port = 7789
 
-soap_body = '''<?xml version="1.0" encoding="utf-8"?>
+old_soap_body = '''<?xml version="1.0" encoding="utf-8"?>
 <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
@@ -29,6 +29,19 @@ soap:encodingStyle="http://www.w3.org/2001/12/soap-encoding">
   </soap:Body>
 </soap:Envelope>
 '''
+
+soap_body = '''<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="tns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP-ENV:Header/>
+   <ns0:Body>
+      <ns1:say_hello>
+         <ns1:name>Dave</ns1:name>
+         <ns1:times>5</ns1:times>
+      </ns1:say_hello>
+   </ns0:Body>
+</SOAP-ENV:Envelope>
+'''
+
 
 req_header = { 'Content-Type' : 'text/xml; charset=utf-8' }
 conn = httplib.HTTPConnection(soap_host, soap_port, timeout=10)
