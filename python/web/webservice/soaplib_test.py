@@ -12,10 +12,7 @@ comment: webservice 简单学习
 http://soaplib.github.io/soaplib/2_0/pages/helloworld.html#declaring-a-soaplib-service
 http://www.cnblogs.com/grok/archive/2012/04/29/2476177.html
 
-http://www.cnblogs.com/lm3515/archive/2010/10/29/1864456.html
-http://www.cnblogs.com/macroxu-1982/archive/2009/12/23/1630415.html
-http://192.168.100.109:8000/webservices/SOAProvider/plsql/cux_ccih_yz/?wsdl
-
+直接执行pyhton文件就可以把webservice启动了
 服务启动之后可以在浏览器： http://localhost:7789/?wsdl
 得到一个xml文件，具体怎么解读还需要查看资料
 
