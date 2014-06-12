@@ -6,18 +6,22 @@
 '''
 使用fabric自动部署现有的django项目
 
-fab  -f filename op
+fab  -f .\atuo_deploy_by_fabric deploy_nirvana
+
+fab -f .\atuo_deploy_by_fabric restart_nirnava
+
+fab -f .\atuo_deploy_by_fabric start_server
 '''
 
 from fabric.api import *
 from datetime import datetime
 
 PRODUCT_DIR = r"/Application/2.0/"
-BACKUP_NAME = "nirvana"+datetime.strftime(datetime.now(), '%m%d')
+BACKUP_NAME = "nirvana"+datetime.strftime(datetime.now(), '%Y%m%d')
 
-env.hosts =["192.168.100.235"]
-env.user = "root"
-env.password = "xxxxx"
+env.hosts =[""]
+env.user = ""
+env.password = ""
 
 def get_codes():
     #get resource codes
@@ -58,9 +62,15 @@ def start_server():
     with cd(PRODUCT_DIR+"/nirvana"):
         print u'启动nirvana服务'
         run("uwsgi -x uwsgi.xml")
-        run("nohup python manage.py celeryd -l info&")
+        run("sleep 1")
+        #nohup python manage.py celeryd -l info &
+        #最后加了这么一段  从官网得到  >& /dev/null < /dev/null &
+        #run("./startcelery.sh ")
+        #run("nohup python manage.py celeryd -l info >& /dev/null < /dev/null &")
+        run("$(nohup python manage.py celeryd -l info >& /dev/null < /dev/null &)&& sleep 2")
         #产看进程是否启动
         run("ps -ef|grep uwsgi")
+        run("sleep 1")
         run("ps -ef|grep celery")
 
 def deploy_nirvana():
