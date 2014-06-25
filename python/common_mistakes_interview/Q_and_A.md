@@ -6,7 +6,7 @@
 Q: What are some drawbacks of the Python language? <br/>
 python语言的缺点有哪些？
 
-一般的回答会包括这*两点*
+A：一般的回答会包括这*两点*
 
 * 全局解释锁（GIL）<br>
 >CPython (the most common Python implementation) is not fully thread safe.
