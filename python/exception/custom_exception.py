@@ -14,11 +14,13 @@ class NewException(Exception):
 
 
 def ex_test1():
-    r = ""
+    r = "jian.shi"
     try:
-        print '2'+2
+        r = "orengleliu"
+        print '2'+2+[]               #在异常发生行之前的变量在异常发生之后仍然可以取到
         r = 'default value'
     except Exception as e:
+        print r
         r = 'some exception happened'
         return r   #可以吧异常内处理的结果提前返回给上一级,异常就不会raise了！！！
         raise NewException()
