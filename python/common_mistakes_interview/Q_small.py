@@ -5,6 +5,7 @@
 一些比较简短的问题和回答
 '''
 
+print 'Q1'
 #say('Hello')('World')
 def say(a):
     def hello(b):
@@ -18,3 +19,5 @@ say1 = lambda x: lambda y: x + " " + y
 print say1('Hello')('World')
 
 print '*'*50
+
+
