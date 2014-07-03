@@ -38,3 +38,5 @@ __服务(service)__
 
     openstack@ubuntu:~/devstack$ source openrc admin admin
     openstack@ubuntu:~/devstack$ nova service-list
+
+
