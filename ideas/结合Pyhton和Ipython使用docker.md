@@ -217,3 +217,4 @@ docker-py模块来创建docker 容器。 现在使用python，我们可以结合
 
 #原文
 原文地址：http://serverascode.com/2014/06/05/docker-python.html
+orangleliu  @2014-07-13
