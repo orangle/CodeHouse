@@ -1,7 +1,7 @@
 ﻿Celery最佳实践
 ============
 
->orangleliu 翻译  [原文点击查看](https://denibertovic.com/posts/celery-best-practices/)
+>[orangleliu](http://blog.csdn.net/orangleliu) 翻译  [原文点击查看](https://denibertovic.com/posts/celery-best-practices/)
 
  如果你的工作和 [Django](https://www.djangoproject.com/) 相关, 并且有时候需要执行一些长时间的后台任务。可能你已经使用了某种任务队列，[Celery](http://www.celeryproject.org/)就是Python（和Django）世界中时下解决类似问题最受欢迎的项目。
 
@@ -21,5 +21,20 @@
 
 我不得不说你也不应该在开发环境中使用关系型数据库来作为代理，像Docker和预先建立好的镜像都能给你一个沙盒中的RabbitMQ环境使用。
 
-###使用多个Queues（队列），不要只是使用默认的那个（default）
+###NO.2 使用多个Queues（队列），不要只是使用默认的那个（default）
+Celery的启动是相当的简单，它会启动一个默认的队列，除非你定义了别的队列否则它就会把所有的任务放到这一个队列中去。最常见的就是像下面这样。
+
+    @app.task()
+    def my_taskA(a, b, c):
+        print("doing something here...")
+
+    @app.task()
+    def my_taskB(x, y):
+        print("doing something here...")
+
+两个任务会放到同一个队列中去(如果没有在celeryconfig.py中配置).我能清楚的看到有哪些事发生，因为你那些可人的后台任务上仅仅有那么一个 装饰器。这里我关心的是，也许 taskA 和 taskB做的是完全不同的两件事情，也许其中一个要比另外一个重要的多，那为什么要把它们扔到一个篮子里呢？虽然一个worker可以处理这两个任务，设想某个时间有大量的taskB，然而更重要的 taskA却没有得到worker的足够重视？这种情况下增加了worker以后，所有的worker还是会平等的对待这两种任务，在大量taskB的情况下，taskA还是无法得到应得的重视。 这就把我们带到了下一个要点中。
+
+###NO.3 使用优先级wokers
+
+
 
