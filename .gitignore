@@ -2,3 +2,4 @@
 *.pyc
 excel/*
 temp/*
+*.log
