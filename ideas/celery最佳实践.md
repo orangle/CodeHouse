@@ -36,5 +36,55 @@ Celery的启动是相当的简单，它会启动一个默认的队列，除非�
 
 ###NO.3 使用优先级wokers
 
+解决上面问题办法就是把taskA放到一个队列中去，taskB放到另一个队列中去，分配x个workers去处理Q1队列，有于Q2队列有更多的任务需要处理，其他的workers都分配给Q2队列。这种方式你能保证taskB有足够多的workers去，同时维持几个高优先级的队列给taskA，当taskA任务来的时候不需要等待很久就可以被处理掉。
+
+所以，手工的定义队列
+
+    CELERY_QUEUES = (
+        Queue('default', Exchange('default'), routing_key='default'),
+        Queue('for_task_A', Exchange('for_task_A'), routing_key='for_task_A'),
+        Queue('for_task_B', Exchange('for_task_B'), routing_key='for_task_B'),
+    )
+
+你的routes 会决定不同的任务分配到不同的队列
+
+    CELERY_ROUTES = {
+        'my_taskA': {'queue': 'for_task_A', 'routing_key': 'for_task_A'},
+        'my_taskB': {'queue': 'for_task_B', 'routing_key': 'for_task_B'},
+    }
+
+然后你可以为每个任务启动不同的workers
+
+    celery worker -E -l INFO -n workerA -Q for_task_A
+    celery worker -E -l INFO -n workerB -Q for_task_B
+
+###No.4 使用Celery's的错误处理机制
+
+我见过最多就是，任务根本就没有错误处理的概念。如果一个任务失败了就是失败了。在某些情况下这样处理是不错的，然而我见过最多的是一些第三方API的错误，网络原因，或者资源不可用等造成的。最简单的处理这种错误的办法就是对任务进行重试。因为有一些第三方的API是因为服务或者网络的出了问题，但是很快就可以恢复，我们为什么不试一试呢？
+
+    @app.task(bind=True, default_retry_delay=300, max_retries=5)
+    def my_task_A():
+        try:
+            print("doing stuff here...")
+        except SomeNetworkException as e:
+            print("maybe do some clenup here....")
+            self.retry(e)
+
+我比较喜欢就是给每个任务定义一个重试的间隔和重试的次数(分别是default_retry_delay和max_retries参数)。这是最基本的错误处理方式也是我见过最多的。当然Celery还提供了很多种处理处理但是我把celery的文档地址留给你。
+
+###No.5 使用Flower
+
+[Flower](http://celery.readthedocs.org/en/latest/userguide/monitoring.html#flower-real-time-celery-web-monitor) 是一个非常棒的工具，它可以用来监控celery的任务和workers。它是基于web的，所以你可以看到任务进程，详情，worker状态，启动新的workers等。可以通过前面的链接查看它所有的功能。
+
+###No.6 只有真正需要才追踪task的结果
+
+task状态指的是task执行的结果是成功还是失败。它对于后续的某些分析是有用的。需要注意的一个问题是退出结果并不是任务执行的结果，那些信息更类似于对数据的某些影响（例如更新用户的朋友列表）
+
+项目中我见过最多的是不关心这些任务执行时候的状态，有些只是用默认的sqlite数据库在保存这些信息，更好一点的是花时间保存在常规的数据库中（例如postgres 或者其他数据库）
+
+为什么无缘无故的增加web应用数据库的负担呢？使用CELERY_IGNORE_RESULT = True配置在你的celeryconfig.py配置文件中来丢弃这些执行状态。
 
 
+###No.7 不要通过数据库或者ORM对象的方式来执行任务
+
+在一次本地的Python小聚会上发表这个分享之后有几个人建议我把这一条添加到最佳实践的列表中。这个建议是关于什么的呢？不要通过数据库对象（例如你的User model）来执行后台任务，因为对象序列话是包含了一些陈旧的数据。你要作的是把Userid放在任务中，然后任务执行的时候会从数据中获取最新的用户对象。
