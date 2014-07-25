@@ -9,7 +9,6 @@
 '''
 
 import ConfigParser
-import json
 
 config = ConfigParser.RawConfigParser(allow_no_value=True)
 config.read('conf.cfg')
