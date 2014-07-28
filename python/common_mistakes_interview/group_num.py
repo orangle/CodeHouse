@@ -54,11 +54,11 @@ def sort_and_format_to_string(v_list):
     res_list = []
     for group in group_list:
         if len(group)==1:
-            res_list.append(kv_dict[group[0]]) 
+            res_list.append(kv_dict[group[0]])
         elif len(group)>1:
             res_list.append('-'.join((kv_dict[group[0]], kv_dict[group[-1]])))
         else:
-            pass 
+            pass
     res_str = ','.join(res_list)
     return res_str
 
@@ -78,7 +78,7 @@ def group_the_num(ori_list):
                 pop_list.append(ori_list[n+pos])
                 pos += 1
         except:
-            print u'数组已经越界' 
+            print u'index out of range'
         group_list.append(temp_list)
     return group_list
 

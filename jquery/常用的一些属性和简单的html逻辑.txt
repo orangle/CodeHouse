@@ -1,0 +1,2 @@
+﻿1-----禁用一个按钮
+<button disabled="value">
