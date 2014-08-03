@@ -14,7 +14,6 @@ from email.mime.text import MIMEText
 
 SMTPserver = 'smtp.126.com'
 sender = 'liuzhizhi123@126.com'
-destination = '957748332@qq.com'
 password = "xxxx"
 
 message = 'I send a message by Python. 你好'
@@ -29,4 +28,3 @@ mailserver.login(sender, password)
 mailserver.sendmail(sender, [sender], msg.as_string())
 mailserver.quit()
 print 'send email success'
-
