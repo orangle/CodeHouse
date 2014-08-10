@@ -2,7 +2,7 @@
 #title: testPT.sh
 #atuhor: orangleliu
 #date: 2014-08-08
-#desc:
+#desc: 输入2个参数，第二个位数字，如果正确就打印出来
 
 #=====================
 #Function  Check
