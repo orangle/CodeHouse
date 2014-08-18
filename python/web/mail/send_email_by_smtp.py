@@ -1,7 +1,7 @@
-﻿#!/usr/bin/env python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #python2.7x
-#send_email_by_sendmail.py
+#send_email_by_smtp.py
 #author: orangleliu
 #date: 2014-08-15
 '''
@@ -9,6 +9,8 @@ linux 下使用本地的smtp服务来发送邮件
 前提要开启smtp服务，检查的方法
 #ps -ef|grep sendmail
 #telnet localhost 25
+
+这个时候邮件还不定可以发出来，hostname配置可能需要更改
 '''
 import smtplib
 from email.mime.text import MIMEText

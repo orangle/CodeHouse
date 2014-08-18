@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #python2.7x
-#send_email_by_sendmail.py
+#send_email_by_.py
 #author: orangleliu
 #date: 2014-08-15
 '''
