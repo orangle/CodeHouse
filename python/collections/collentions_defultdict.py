@@ -28,7 +28,7 @@ print dict_set
 dict_set1 = {}
 #如果不知道这个字段中key有没有，需要先判断
 if 'key' not in dict_set1:
-    dict_set1 = set()
+    dict_set1['key'] = set()
 dict_set1['key'].add('111')
 dict_set1['key'].add('000')
 print dict_set1
