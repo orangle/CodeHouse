@@ -20,17 +20,16 @@
 ###介绍
 这教程的目标人群是那些没有编程经验的，但是熟悉电脑的基本功能并且想获得更多经验的人。同样也适用于那些来自使用了Lua引擎作为第三方模块支持的游戏或者应用的人们，他们对不自然的编程语言有些害怕。
 
-After completing these tutorials, you will have command of the most common features of Lua and the necessary problem solving abilities to perform some of the most common tasks that all programmers need to understand.
+完成这个教程以后，你将会熟悉lua最基础的特性，具备所有程序员需要了解的基础，能具有解决最基本问题的能力。
 
+为了完成这个教程并且一点一点理解lua编程语言(也是增强使用其他任何语言编程的能力)，你**必须**像下面这么做：
 
+* 所有的练习都要过一遍
+* 认真的敲入每一个例子
+* 运行案例(或者修改正确或者标记如果运行有问题)
 
+这些话听起来很像"笨方法学Python", 这里为我的语言组织能力给大家致歉，但是那本书的基本哲学跟我产生了共鸣，为了帮助大家从这个教程中学到最多我更应该学习作者的教学风格。 如果你对Python感兴趣，我非常推荐那本书。
 
-In order to complete this tutorial and in turn gain an understanding of the Lua programming language (as well as the general skills necessary to program a computer using any arbitrary language), you must do the following:
-
-Go through each exercise
-Type in each example exactly
-Run it (or correct it and make it run if it refuses to)
-This all sounds remarkably similar to the introduction of “Learn Python the Hard Way”, and I apologize for my lack of originality, but the fundamental philosophy of that book resonates with me and so too shall I attempt to follow its author’s style of teaching in order to help you gain the most from this tutorial. If you are interested in Python, I highly recommend that book.
 
 
 ![Lua](http://i.imgur.com/Mo5lv.jpg "lua")
