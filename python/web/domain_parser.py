@@ -10,7 +10,7 @@ urls = ["http://meiwen.me/src/index.html",
           "file:///D:/code/echarts-2.0.3/doc/example/tooltip.html",
           "http://api.mongodb.org/python/current/faq.html#is-pymongo-thread-safe",
           "https://pypi.python.org/pypi/publicsuffix/",
-          "http://127.0.0.1:8000",
+          "http://127.0.0.1:8000",""
           ]
 
 ##-----------------------------使用urlparse+re的方式-------------------------------------
