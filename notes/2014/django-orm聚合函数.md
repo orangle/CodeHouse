@@ -70,9 +70,12 @@ django-orm 聚合函数的使用
     from django.db.models import Count, Avg
     Book.objects.annotate(num_authors=Count('authors')).aggregate(Avg('num_authors'))
 
-以上只是对文档的理解，后面使用会添加些使用心得。
+以上只是对文档的理解，具体使用还需要具体看业务需求。
 
-##使用心得
+
+
+
+
 
 
 
