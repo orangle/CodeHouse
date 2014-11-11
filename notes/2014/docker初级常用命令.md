@@ -26,3 +26,24 @@ docker 初级常用命令
 * docker inspect container_name 查看容器的状态<br>
 
 查看所有命令 docker --help  , 查看二级命令的帮助 docker run --help
+
+###[docker file 使用](https://docs.docker.com/userguide/dockerimages/)
+使用dockerfile可以实现一些自动化的安装
+
+[dockerfile 训练教程](https://docs.docker.com/userguide/level1/)
+
+###连接容器
+例如我们启动了一个web 或者数据库服务，然后需要在不停服务的情况下调整配置参数，就需要一个通道[进入到这个正在运行的容器中](https://docs.docker.com/userguide/dockerlinks/)。
+
+###[管理容器中的数据](https://docs.docker.com/userguide/dockervolumes/)
+
+
+###一些理解
+* 可以自己搭建私有仓库，可以自己制作image
+* container自己没有内核，是依赖于host的内核
+* 现在是分层的，一个image包含了多层，多个文件
+
+
+
+
+

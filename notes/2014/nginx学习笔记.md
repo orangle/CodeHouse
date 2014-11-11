@@ -52,6 +52,9 @@ zib: 压缩  openssl：ssl协议 pcre：地址重写
     #make && make install
 
 ###服务操作
+检查配置文件：
+/usr/sbin/nginx -t -c /etc/nginx/nginx.conf
+
 
 
 
