@@ -6,11 +6,15 @@
 不同平台，实现对所在内网端的ip扫描
 
 有时候需要知道所在局域网的有效ip，但是又不想找特定的工具来扫描。
+使用方法 python ip_scaner.py 192.168.1.1 
+(会扫描192.168.1.1-255的ip)
 '''
 
 import platform
 import sys
 import os
+import time
+import thread
 
 def get_os():
     '''
@@ -36,8 +40,6 @@ def ping_ip(ip_str):
             break
     if flag:
         print "ip: %s is ok ***"%ip_str
-    else:
-        print "ip: %s is bad"%ip_str
 
 def find_ip(ip_prefix):
     '''
@@ -45,11 +47,14 @@ def find_ip(ip_prefix):
     '''
     for i in range(1,256):
         ip = '%s.%s'%(ip_prefix,i)
-        ping_ip(ip)
+        thread.start_new_thread(ping_ip, (ip,))
+        time.sleep(0.3)
     
 if __name__ == "__main__":
+    print "start time %s"%time.ctime()
     commandargs = sys.argv[1:]
     args = "".join(commandargs)    
     
     ip_prefix = '.'.join(args.split('.')[:-1])
     find_ip(ip_prefix)
+    print "end time %s"%time.ctime()
