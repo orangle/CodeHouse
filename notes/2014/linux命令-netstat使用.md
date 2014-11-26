@@ -34,7 +34,7 @@
     # netstat -ant
 6 只查看监听的连接，以及pid信息（常用）
 
-   # netstat -tnlp
+    # netstat -tnlp
 7 每秒查看一次tcp连接
 
     # netstat -ct
