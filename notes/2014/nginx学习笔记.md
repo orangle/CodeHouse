@@ -56,7 +56,6 @@ zib: 压缩  openssl：ssl协议 pcre：地址重写
 /usr/sbin/nginx -t -c /etc/nginx/nginx.conf
 
 
-
 ### 负载均衡的配置
 
 
