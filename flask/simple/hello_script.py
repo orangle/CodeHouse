@@ -4,11 +4,14 @@
 #hello_script.py
 '''
 flask 只提供了web框架的核心功能，其他很多功能需要通过拓展来实现
-这是falsk拓展的一个小案例 flask_script
+这是falsk拓展的一个小案例
+使用了flask_script拓展
 '''
 
 from flask import Flask
+from flask.ext.script import Manager
 app = Flask(__name__)
+manager = Manager(app)
 
 #访问根目录，显示你好
 @app.route("/")
@@ -21,12 +24,9 @@ def user(name):
     return 'Hello %s'%name
 
 if __name__ == '__main__':
-    #开发时候使用debug模式，方面调试
-    app.run(debug=True)
+    manager.run()
 
 '''
-(flask) PS D:\CodeHouse\flask\simple> python hello.py
+PS D:\CodeHouse\flask\simple> python .\hello_script.py runserver
  * Running on http://127.0.0.1:5000/
- * Restarting with reloader
-
 '''

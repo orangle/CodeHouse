@@ -1,0 +1,26 @@
+﻿{% extends "bootstrap/base.html" %}
+<!-- 整体的页面风格可以通过基本模板来继承 -->
+{% block content %}
+
+<h1> Hello Flask template</h1>
+
+<a href="http://jinja.pocoo.org/docs/dev/"> Jinja2 文档地址</a>
+<h3>变量渲染</h3>
+<p>value of dict:  {{ mydict["name"]}}</p>
+<p>value of list: {{ mylist[1] }}</p>
+<p>method of obj: {{ myobj().sayhello() }} </p>
+<p>filter of jinja2:  {{ mylist[0]|upper }}</p>
+
+<h3>流程控制语句</h3>
+<p>
+    {% if user %}
+        Hello, {{ user }}
+    {% else %}
+        Hello, Stranger!
+    {% endif %}
+</p>
+<!--公共的部分可以写到一个页面中，然后引用-->
+{% include 'bottom.html' %}
+{% endblock %}
+
+
