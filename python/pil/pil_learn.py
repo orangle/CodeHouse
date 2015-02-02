@@ -4,6 +4,8 @@ author: orangleliu
 pil处理图片，验证，处理
 大小，格式 过滤
 压缩，截图，转换
+
+图片库最好用Pillow
 '''
 
 #图片的基本参数获取
@@ -33,52 +35,139 @@ def cut_image(img):
     print u'重新拼图成功'
 
 
-def equal_ratio_compress_image(img, ratio=0.8):
-    '''
-    对图片的等比压缩
-    '''
-    pass 
-
-
 def logo_watermark(img, logo_path):
     '''
     添加一个图片水印,原理就是合并图层，用png比较好
     '''
     baseim = img
-    logoim = Image.open(logo_path) 
+    logoim = Image.open(logo_path)
     bw, bh = baseim.size
     lw, lh = logoim.size
     baseim.paste(logoim, (bw-lw, bh-lh))
     baseim.save('test3.jpe', 'JPEG')
     print u'logo水印组合成功'
-    
-def text_watermark(img, text, out_file="test4.jpg", angle=23, opacity=0.25):
+
+def text_watermark(img, text, out_file="test4.jpg", angle=23, opacity=0.50):
     '''
     添加一个文字水印，做成透明水印的模样，应该是png图层合并
     http://www.pythoncentral.io/watermark-images-python-2x/
     这里会产生著名的 ImportError("The _imagingft C module is not installed") 错误
     Pillow通过安装来解决 pip install Pillow
     '''
-    watermark = Image.new('RGBA', img.size, (0,0,0,0))
+    watermark = Image.new('RGBA', img.size, (255,255,255))
     FONT = "msyh.ttf"
     size = 2
-    
-    n_font = ImageFont.truetype(FONT, size)
+
+    n_font = ImageFont.truetype(FONT, size)                                       #得到字体
     n_width, n_height = n_font.getsize(text)
-    while (n_width+n_height < watermark.size[0]):
+    text_box = min(watermark.size[0], watermark.size[1])
+    while (n_width+n_height <  text_box):
         size += 2
         n_font = ImageFont.truetype(FONT, size=size)
-        n_width, n_height = n_font.getsize(text)    
-    draw = ImageDraw.Draw(watermark, 'RGBA')
-    draw.text(((watermark.size[0] - n_width) / 2,
-              (watermark.size[1] - n_height) / 2),
-              text, font=n_font, fill="#ff00ff")    
+        n_width, n_height = n_font.getsize(text)                                   #文字逐渐放大，但是要小于图片的宽高最小值
+
+    text_width = (watermark.size[0] - n_width) / 2
+    text_height = (watermark.size[1] - n_height) / 2
+    #watermark = watermark.resize((text_width,text_height), Image.ANTIALIAS)
+    draw = ImageDraw.Draw(watermark, 'RGBA')                                       #在水印层加画笔
+    draw.text((text_width,text_height),
+              text, font=n_font, fill="#21ACDA")
     watermark = watermark.rotate(angle, Image.BICUBIC)
     alpha = watermark.split()[3]
     alpha = ImageEnhance.Brightness(alpha).enhance(opacity)
     watermark.putalpha(alpha)
     Image.composite(watermark, img, watermark).save(out_file, 'JPEG')
     print u"文字水印成功"
+
+
+#等比例压缩图片
+def resizeImg(**args):
+    args_key = {'ori_img':'','dst_img':'','dst_w':'','dst_h':'','save_q':75}
+    arg = {}
+    for key in args_key:
+        if key in args:
+            arg[key] = args[key]
+
+    im = image.open(arg['ori_img'])
+    ori_w,ori_h = im.size
+    widthRatio = heightRatio = None
+    ratio = 1
+    if (ori_w and ori_w > arg['dst_w']) or (ori_h and ori_h  > arg['dst_h']):
+        if arg['dst_w'] and ori_w > arg['dst_w']:
+            widthRatio = float(arg['dst_w']) / ori_w #正确获取小数的方式
+        if arg['dst_h'] and ori_h > arg['dst_h']:
+            heightRatio = float(arg['dst_h']) / ori_h
+
+        if widthRatio and heightRatio:
+            if widthRatio < heightRatio:
+                ratio = widthRatio
+            else:
+                ratio = heightRatio
+
+        if widthRatio and not heightRatio:
+            ratio = widthRatio
+        if heightRatio and not widthRatio:
+            ratio = heightRatio
+
+        newWidth = int(ori_w * ratio)
+        newHeight = int(ori_h * ratio)
+    else:
+        newWidth = ori_w
+        newHeight = ori_h
+
+    im.resize((newWidth,newHeight),image.ANTIALIAS).save(arg['dst_img'],quality=arg['save_q'])
+
+    '''
+    image.ANTIALIAS还有如下值：
+    NEAREST: use nearest neighbour
+    BILINEAR: linear interpolation in a 2x2 environment
+    BICUBIC:cubic spline interpolation in a 4x4 environment
+    ANTIALIAS:best down-sizing filter
+    '''
+
+#裁剪压缩图片
+def clipResizeImg(**args):
+
+    args_key = {'ori_img':'','dst_img':'','dst_w':'','dst_h':'','save_q':75}
+    arg = {}
+    for key in args_key:
+        if key in args:
+            arg[key] = args[key]
+
+    im = image.open(arg['ori_img'])
+    ori_w,ori_h = im.size
+
+    dst_scale = float(arg['dst_h']) / arg['dst_w'] #目标高宽比
+    ori_scale = float(ori_h) / ori_w #原高宽比
+
+    if ori_scale >= dst_scale:
+        #过高
+        width = ori_w
+        height = int(width*dst_scale)
+
+        x = 0
+        y = (ori_h - height) / 3
+
+    else:
+        #过宽
+        height = ori_h
+        width = int(height*dst_scale)
+
+        x = (ori_w - width) / 2
+        y = 0
+
+    #裁剪
+    box = (x,y,width+x,height+y)
+    #这里的参数可以这么认为：从某图的(x,y)坐标开始截，截到(width+x,height+y)坐标
+    #所包围的图像，crop方法与php中的imagecopy方法大为不一样
+    newIm = im.crop(box)
+    im = None
+
+    #压缩
+    ratio = float(arg['dst_w']) / width
+    newWidth = int(width * ratio)
+    newHeight = int(height * ratio)
+    newIm.resize((newWidth,newHeight),image.ANTIALIAS).save(arg['dst_img'],quality=arg['save_q'])
 
 #常用的方法
 # img.show() 显示图片
