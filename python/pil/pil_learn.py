@@ -15,6 +15,9 @@ except ImportError:
     import Image, ImageDraw, ImageFont, ImageEnhance
 
 def compress_image(img, w=128, h=128):
+    '''
+    缩略图
+    '''
     img.thumbnail((w,h))
     im.save('test1.png', 'PNG')
     print u'成功保存为png格式, 压缩为128*128格式图片'
@@ -33,7 +36,6 @@ def cut_image(img):
     img.paste(region, box)
     img.save('test2.jpg', 'JPEG')
     print u'重新拼图成功'
-
 
 def logo_watermark(img, logo_path):
     '''
@@ -81,22 +83,20 @@ def text_watermark(img, text, out_file="test4.jpg", angle=23, opacity=0.50):
 
 
 #等比例压缩图片
-def resizeImg(**args):
-    args_key = {'ori_img':'','dst_img':'','dst_w':'','dst_h':'','save_q':75}
-    arg = {}
-    for key in args_key:
-        if key in args:
-            arg[key] = args[key]
-
-    im = image.open(arg['ori_img'])
-    ori_w,ori_h = im.size
+def resizeImg(img, dst_w=0, dst_h=0, qua=85):
+    '''
+    只给了宽或者高，或者两个都给了，然后取比例合适的
+    如果图片比给要压缩的尺寸都要小，就不压缩了
+    '''
+    ori_w, ori_h = im.size
     widthRatio = heightRatio = None
     ratio = 1
-    if (ori_w and ori_w > arg['dst_w']) or (ori_h and ori_h  > arg['dst_h']):
-        if arg['dst_w'] and ori_w > arg['dst_w']:
-            widthRatio = float(arg['dst_w']) / ori_w #正确获取小数的方式
-        if arg['dst_h'] and ori_h > arg['dst_h']:
-            heightRatio = float(arg['dst_h']) / ori_h
+
+    if (ori_w and ori_w > dst_w) or (ori_h and ori_h  > dst_h):
+        if dst_w and ori_w > dst_w:
+            widthRatio = float(dst_w) / ori_w                                      #正确获取小数的方式
+        if dst_h and ori_h > dst_h:
+            heightRatio = float(dst_h) / ori_h
 
         if widthRatio and heightRatio:
             if widthRatio < heightRatio:
@@ -106,6 +106,7 @@ def resizeImg(**args):
 
         if widthRatio and not heightRatio:
             ratio = widthRatio
+
         if heightRatio and not widthRatio:
             ratio = heightRatio
 
@@ -115,10 +116,11 @@ def resizeImg(**args):
         newWidth = ori_w
         newHeight = ori_h
 
-    im.resize((newWidth,newHeight),image.ANTIALIAS).save(arg['dst_img'],quality=arg['save_q'])
+    im.resize((newWidth,newHeight),Image.ANTIALIAS).save("test5.jpg", "JPEG", quality=qua)
+    print u'等比压缩完成'
 
     '''
-    image.ANTIALIAS还有如下值：
+    Image.ANTIALIAS还有如下值：
     NEAREST: use nearest neighbour
     BILINEAR: linear interpolation in a 2x2 environment
     BICUBIC:cubic spline interpolation in a 4x4 environment
@@ -126,27 +128,23 @@ def resizeImg(**args):
     '''
 
 #裁剪压缩图片
-def clipResizeImg(**args):
-
-    args_key = {'ori_img':'','dst_img':'','dst_w':'','dst_h':'','save_q':75}
-    arg = {}
-    for key in args_key:
-        if key in args:
-            arg[key] = args[key]
-
-    im = image.open(arg['ori_img'])
+def clipResizeImg(im, dst_w, dst_h, qua=95):
+    '''
+        先按照一个比例对图片剪裁，然后在压缩到指定尺寸
+        一个图片 16:5 ，压缩为 2:1 并且宽为200，就要先把图片裁剪成 10:5,然后在等比压缩
+    '''
     ori_w,ori_h = im.size
 
-    dst_scale = float(arg['dst_h']) / arg['dst_w'] #目标高宽比
-    ori_scale = float(ori_h) / ori_w #原高宽比
+    dst_scale = float(dst_w) / dst_h  #目标高宽比
+    ori_scale = float(ori_w) / ori_h #原高宽比
 
-    if ori_scale >= dst_scale:
+    if ori_scale <= dst_scale:
         #过高
         width = ori_w
-        height = int(width*dst_scale)
+        height = int(width/dst_scale)
 
         x = 0
-        y = (ori_h - height) / 3
+        y = (ori_h - height) / 2
 
     else:
         #过宽
@@ -164,10 +162,13 @@ def clipResizeImg(**args):
     im = None
 
     #压缩
-    ratio = float(arg['dst_w']) / width
+    ratio = float(dst_w) / width
     newWidth = int(width * ratio)
     newHeight = int(height * ratio)
-    newIm.resize((newWidth,newHeight),image.ANTIALIAS).save(arg['dst_img'],quality=arg['save_q'])
+    newIm.resize((newWidth,newHeight),Image.ANTIALIAS).save("test6.jpg", "JPEG",quality=95)
+    print  "old size  %s  %s"%(ori_w, ori_h)
+    print  "new size %s %s"%(newWidth, newHeight)
+    print u"剪裁后等比压缩完成"
 
 #常用的方法
 # img.show() 显示图片
@@ -180,4 +181,6 @@ if __name__ == "__main__":
     #cut_image(im)
     #cut_image(im)
     #logo_watermark(im, 'logo.png')
-    text_watermark(im, 'Orangleliu')
+    #text_watermark(im, 'Orangleliu')
+    # resizeImg(im, dst_w=200, qua=85)
+    clipResizeImg(im, 100, 200)
