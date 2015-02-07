@@ -15,6 +15,7 @@ import sys
 import os
 import time
 import thread
+import socket
 
 def get_os():
     '''
@@ -50,11 +51,30 @@ def find_ip(ip_prefix):
         thread.start_new_thread(ping_ip, (ip,))
         time.sleep(0.3)
     
+def get_local_ip():
+    '''
+    获取本地局域网的ip，出了127的干扰，还有更多的是各种虚拟网卡的干扰
+    但是又用了连接外网，也不是很好
+    '''
+    try:
+        local_ip = [(s.connect(('8.8.8.8', 80)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]
+    except:
+        local_ip = ""
+    print "local_ip is %s"%local_ip
+    return local_ip
+    
 if __name__ == "__main__":
     print "start time %s"%time.ctime()
     commandargs = sys.argv[1:]
     args = "".join(commandargs)    
-    
     ip_prefix = '.'.join(args.split('.')[:-1])
+    
+    if ip_prefix == "":
+        ip_prefix = get_local_ip()
+        ip_prefix = '.'.join(ip_prefix.split('.')[:-1])
+        
+    if ip_prefix == "":
+        print "some error happened !"
+        
     find_ip(ip_prefix)
     print "end time %s"%time.ctime()
