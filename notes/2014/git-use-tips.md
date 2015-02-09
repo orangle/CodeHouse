@@ -26,9 +26,11 @@ git remote add origin <server\>
 1.A账号登录github上，参与B账号的项目，在B账号网页上点fork
 2.把项目clone到本地
 　　git clone https://github.com/A/xxx.git
+
 3.添加上游远端GIT
 　　git remote add upstream https://github.com/B/xxx.git
 　　upstream可以随便取别名
+
 4.取远端最新代码，保证自己的代码是最新，免得跟别人的有冲突
 　　git fetch upstream
 
