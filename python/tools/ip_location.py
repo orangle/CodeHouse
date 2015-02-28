@@ -34,7 +34,7 @@ def _p(words):
     return words.decode("utf-8")
 
 class IPLocator(object):
-    def __init__(self, ipdbFile):
+    def __init__(self, ipdbFile="qqwry.dat"):
         self.ipdb = open(ipdbFile, "rb")
         str = self.ipdb.read(8)
         # 纯真数据库全部采用了little-endian字节序
@@ -174,7 +174,14 @@ class IPLocator(object):
         addr = _p(self.getIpAddr(self.str2ip(ip_str)))
         data = {"ip": ip_str, "address":addr}
         return json.dumps(data)
+    
+    
+#直接返回地址
+ipl = IPLocator("qqwry.dat")
+def getAddress(ip_str):
+    return _p(ipl.getIpAddr(ipl.str2ip(ip_str)))
 
+    
 def main():
     #默认路径跟脚本一个文件夹
     import argparse
