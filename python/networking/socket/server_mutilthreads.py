@@ -3,6 +3,7 @@
 #server_mutilthreads.py
 '''
 socket服务器的多线程模型
+linux 正常， windows下会报错
 '''
 
 import sys
@@ -13,6 +14,9 @@ import time
 QUIT = False
 
 class ClientThread(threading.Thread):
+    '''
+    处理一个socket连接的线程
+    '''
     def __init__(self, client_sock):
         threading.Thread.__init__(self)
         self.client = client_sock
@@ -37,7 +41,7 @@ class ClientThread(threading.Thread):
         return
 
     def readline(self):
-        print  self.client
+        #print  self.client
         result = self.client.recv(200)
         if(None != result):
             result = result.strip().lower()
@@ -53,6 +57,7 @@ class Server(object):
 
     def run(self):
         all_good = False
+        #重试主要是为了防止端口被占用
         try_count = 0
 
         while not all_good:
