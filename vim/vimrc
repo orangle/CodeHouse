@@ -21,25 +21,35 @@ let g:airline_theme='powerlineish'
 let g:airline_enable_syntastic=1
 
 "nerdtree configure
-map <F2> :NERDTreeToggle<CR>
+"map <F2> :NERDTreeToggle<CR>
+nmap <Leader>fl :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
+let NERDTreeMinimalUI=1
 
+filetype on
 filetype plugin indent on
 "rest config here
 augroup vimrc_autocmds
-	autocmd!
-	autocmd FileType python highlight Excess ctermbg=DarkGrey guibg=Red
-	autocmd FileType python match Excess /\%81v.*/
-	autocmd FileType python set nowrap
+ autocmd!
+ autocmd FileType python highlight Excess ctermbg=DarkGrey guibg=Red
+ autocmd FileType python match Excess /\%81v.*/
+ autocmd FileType python set nowrap
 augroup END
+
+"color scheme, scheme dir is ~/.vim/color
+set background=dark
+colorscheme solarized
 
 set history=50
 set ruler
 set nu
+set expandtab
 set tabstop=4
 set shiftwidth=4
 set autoindent
 set nobackup
 set noswapfile
+
 
 map <c-j> <c-w>j
 map <c-k> <c-w>k
@@ -52,21 +62,21 @@ autocmd BufNewFile *.py ks|call FileName()|'s
 autocmd BufNewFile *.py ks|call CreatedTime()|'s
 
 fun FileName()
-	if line("$") > 10
-		let l = 10
-	else
-		let l = line("$")
-	endif 
-	exe "1," . l . "g/File Name:.*/s/File Name:.*/File Name: " .expand("%")
+ if line("$") > 10
+  let l = 10
+ else
+  let l = line("$")
+ endif 
+ exe "1," . l . "g/File Name:.*/s/File Name:.*/File Name: " .expand("%")
 endfun 
 
 fun CreatedTime()
-	if line("$") > 10
-		let l = 10
-	else
-		let l = line("$")
-	endif 
-	exe "1," . l . "g/Created Time:.*/s/Created Time:.*/Created Time: " .strftime("%Y-%m-%d %T")
+ if line("$") > 10
+  let l = 10
+ else
+  let l = line("$")
+ endif 
+ exe "1," . l . "g/Created Time:.*/s/Created Time:.*/Created Time: " .strftime("%Y-%m-%d %T")
 endfun 
 "auto add python header --end
 
