@@ -22,7 +22,7 @@ class RequestHandler(SocketServer.BaseRequestHandler):
     def handle(self):
         data = self.request.recv(BUF_SIZE)
         current_process_id = os.getpid()
-        response = "%s: %s"%(current_process_id, data)
+        response = "pid-->%s: %s"%(current_process_id, data)
         print "Server sending response [%s]"%response
         self.request.send(response)
         return
@@ -32,22 +32,17 @@ class ForkingServer(SocketServer.ForkingMixIn, SocketServer.TCPServer):
 
 def main():
     import time
-    try:
-        option = sys.argv[1]
-    except:
-        option = ""
 
-    if option == "server":
-        server = ForkingServer((SERVER_HOST, SERVER_PORT),
+    server = ForkingServer((SERVER_HOST, SERVER_PORT),
                 RequestHandler)
-        ip, port = server.server_address
-        server_thread = threading.Thread(target=server.serve_forever)
-        server_thread.setDaemon(True)
-        server_thread.start()
-        print "server loop pid: %s"%os.getpid()
-        time.sleep(300)
-        server.shutdown()
-        server.socket.close()
+    ip, port = server.server_address
+    server_thread = threading.Thread(target=server.serve_forever)
+    server_thread.setDaemon(True)
+    server_thread.start()
+    print "server loop pid: %s"%os.getpid()
+    time.sleep(300)
+    server.shutdown()
+    server.socket.close()
 
 if __name__ == "__main__":
     main()

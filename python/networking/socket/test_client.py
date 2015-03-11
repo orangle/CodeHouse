@@ -40,12 +40,13 @@ class ForkedClient(object):
 
 
 if __name__ == "__main__":
-        clients = []
-        for i in range(5):
-            client = ForkedClient(SERVER_HOST, SERVER_PORT)
-            client.run()
-            clients.append(client)
-            time.sleep(1)
+    import time
+    clients = []
+    for i in range(100):
+        client = ForkedClient(SERVER_HOST, SERVER_PORT)
+        client.run()
+        clients.append(client)
+        time.sleep(1)
 
-        for c in clients:
-            c.shutdown()
+    for c in clients:
+        c.shutdown()
