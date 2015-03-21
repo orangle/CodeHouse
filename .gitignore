@@ -4,3 +4,4 @@ excel/*
 temp/*
 *.log
 *.out
+*.so
