@@ -3,3 +3,4 @@
 excel/*
 temp/*
 *.log
+*.out
