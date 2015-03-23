@@ -2,17 +2,14 @@
 local socket = require "socket"
 
 function check()
-    while true do 
         socket.sleep(1)
         print("find task file, co.............")
-        coroutine.yield(coo)
-    end 
+        coroutine.yield()
 end 
 
 coo = coroutine.create(
     function()
         while true do 
-            check() 
             print("阻塞线程 前")
             coroutine.yield()
             socket.sleep(5)
@@ -21,4 +18,9 @@ coo = coroutine.create(
     end 
 )
 
-coroutine.resume(coo)
+print(coo)
+print(coroutine.status(coo))
+while true do 
+    coroutine.resume(coo)
+    check()
+end 
