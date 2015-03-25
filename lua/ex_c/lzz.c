@@ -1,8 +1,10 @@
 /*学习写lua c拓展，对于一些简单的函数自己提供C拓展
- *ubuntu 编译 gcc -fPIC -shared -llua lua_socketlib.c -o socketlib.so -I/usr/include/lua5.1 -std=gnu99
+ *ubuntu 编译 gcc -fPIC -shared -llua lzz.c -o lzz.so -I/usr/include/lua5.1 -std=gnu99
  */
 
 #include "unistd.h"
+#include "sys/types.h"
+#include "sys/stat.h"
 
 #include "lua.h"
 #include "lualib.h"
@@ -34,9 +36,24 @@ static int get_dir (lua_State *L){
 }
 
 
+static int fsize (lua_State *L){
+    const char *filename = lua_tostring(L, 1);
+    struct stat st;
+    if (stat(filename, &st) == 0){
+        lua_pushinteger(L, st.st_size);
+        return 1;
+    }else{
+        lua_pushnil(L);
+        lua_pushstring(L, "get size error");
+        return 2;
+    }
+}
+
+
 static const struct luaL_Reg libs[] = {
     {"hello", hello_c},
     {"currentdir", get_dir},
+    {"fsize", fsize},
     {NULL, NULL}  /*the end*/
 };
 
