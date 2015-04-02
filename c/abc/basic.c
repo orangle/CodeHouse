@@ -11,14 +11,14 @@ int sum(int, int);
 
 int main()
 {
-    printf("This is a C basic program \n");
-    total = sum(1,3);
-    printf("Sum of two numbers: %d \n", total);
-    getchar();
-    return 0;
+	printf("This is a C basic program \n");
+	total = sum(1, 3);
+	printf("Sum of two numbers: %d \n", total);
+	getchar();
+	return 0;
 }
 
 int sum(int a, int b)
 {
-    return a + b;    
+	return a + b;
 }
