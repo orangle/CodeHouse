@@ -14,6 +14,7 @@ from email.mime.text import MIMEText
 
 SMTPserver = 'smtp.126.com'
 sender = 'liuzhizhi123@126.com'
+mailto_list = [sender]
 password = "xxxx"
 
 message = 'I send a message by Python. 你好'
@@ -21,7 +22,7 @@ msg = MIMEText(message)
 
 msg['Subject'] = 'Test Email by Python'
 msg['From'] = sender
-msg['To'] = destination
+msg['To'] = ";".join(mailto_list)
 
 mailserver = smtplib.SMTP(SMTPserver, 25)
 mailserver.login(sender, password)
