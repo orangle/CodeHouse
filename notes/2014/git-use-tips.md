@@ -21,6 +21,9 @@ git remote add origin <server\>
 * auto merge:   git pull
 * after handled conflicts:  git add filename2
 
+#### 查看远程仓库的地址
+$ git remote -v
+
 ####github 协作
 
 1.A账号登录github上，参与B账号的项目，在B账号网页上点fork
@@ -55,6 +58,20 @@ https://gitcafe.com/GitCafe/Help/wiki/%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%85%E5%92
 ####区别github 和别的托管服务 设置
 $ git config --global github.user defnngj      //github 上的用户名
 $ git config --global github.token e97279836f0d415a3954c1193dba522f   #
+
+####  创建仓库
+
+$ git init
+$ git add readme.txt
+$ git commit -m "readme file"
+
+
+
+
+
+
+
+
 
 
 
