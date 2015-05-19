@@ -21,7 +21,8 @@ backlog = 5
 def echo_server(port):
     ss = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     #设置端口重用
-    ss.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    #ss.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+    #ss.settimeout(60)
     server_info = (host, port)
     ss.bind(server_info)
     ss.listen(backlog)
@@ -29,11 +30,16 @@ def echo_server(port):
     while 1:
         client, addr = ss.accept()
         print "client comming: %s %s"%(addr[0], addr[1])
-        data = client.recv(buff_data)
-        if data:
-            print "Data: %s"%data
-            client.send("Server: %s"%data)
-        client.close()
+        client.settimeout(30)
+
+        try:
+            data = client.recv(buff_data)
+            if data:
+                print "Data: %s"%data
+                client.send("Server: %s"%data)
+        except socket.timeout:
+            print "socket timeout"
+            client.close()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Scoket echo server")
