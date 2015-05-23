@@ -1,8 +1,8 @@
 ﻿
 *.pyc
-excel/*
-temp/*
-notes/*
+excel/
+temp/
+notes/
 *.log
 *.out
 *.so
