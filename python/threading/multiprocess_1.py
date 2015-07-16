@@ -8,6 +8,7 @@
 
 from multiprocessing import Process
 import os
+import time
 
 def info(title):
     '''
@@ -17,7 +18,8 @@ def info(title):
     print 'module_name:', __name__
     if hasattr(os, 'getppid'):
         print 'parent process', os.getppid()
-    print 'process is', os.getpid(), '\n\t'
+    time.sleep(1)
+    print 'process is', os.getpid(), 'end \n\t'
 
 def f(name):
     info('function f')
@@ -27,4 +29,5 @@ if __name__=='__main__':
     info('main line')
     p = Process(target=f, args=('oranglelliu',))
     p.start()
-    p.join()
+    #p.join()
+    print "main process end"
