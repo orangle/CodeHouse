@@ -2,7 +2,6 @@
 *.pyc
 excel/
 temp/
-notes/
 *.log
 *.out
 *.so
