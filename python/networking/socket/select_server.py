@@ -11,7 +11,7 @@
 使用select模型，处理并发连接
 '''
 
-import select 
+import select
 import socket
 import sys
 import Queue
@@ -19,7 +19,7 @@ import Queue
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.setblocking(0)
 
-server_addr = ("localhost", 8889)
+server_addr = ("localhost", 9999)
 print >>sys.stderr, 'startup server %s on port %s'%server_addr
 server.bind(server_addr)
 
@@ -32,7 +32,7 @@ message_queues = {}
 while inputs:
     print >>sys.stderr,'\n waiting for next event'
     readable, writable, exceptional = select.select(inputs, outputs, inputs)
-    
+
     #对于几种不同状态socket的处理
     for s in readable:
 
@@ -58,7 +58,7 @@ while inputs:
                 inputs.remove(s)
                 s.close()
                 del message_queues[s]
-    
+
     for s in writable:
         try:
             next_msg = message_queues[s].get_nowait()
@@ -79,15 +79,15 @@ while inputs:
         s.close()
 
         del message_queues[s]
-    
-
-
-             
 
 
 
-    
-        
+
+
+
+
+
+
 
 
 

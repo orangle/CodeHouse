@@ -1,25 +1,26 @@
 --简单模块写法的模板
+--这里的table一定要是一个局部变量，使用全局变量作为模块十分不好
 
 local _M = {}
 
 function _M.is_ip(ip)
-    if ip == nil or type(ip) ~= "string" then 
-        return false 
-    end 
+    if ip == nil or type(ip) ~= "string" then
+        return false
+    end
 
     --check ipv4
     local chunks = {ip:match("(%d+)%.(%d+)%.(%d+)%.(%d+)")}
     if (#chunks == 4) then
-        for _, v in pairs(chunks) do 
-                if (tonumber(v)) < 0 or tonumber(v) > 255 then 
-                    return false 
-                end 
-        end 
-        return true 
+        for _, v in pairs(chunks) do
+                if (tonumber(v)) < 0 or tonumber(v) > 255 then
+                    return false
+                end
+        end
+        return true
     else
-        return false 
-    end 
-end 
+        return false
+    end
+end
 
 
 function _M.test_ip()
@@ -35,6 +36,6 @@ function _M.test_ip()
     for k,v in pairs(ips) do
         print(v, _M.is_ip(v))
     end
-end 
+end
 
 return _M

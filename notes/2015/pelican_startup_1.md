@@ -16,12 +16,14 @@ Authors: orangleliu
 ```
 pip install pelican markdown
 ```
+
 不管你是用系统的python环境还是 virtualenv 都需要安装必要的组件。根据包依赖应该会装这些packages
 **pelican, feedgenerator, jinja2, blinker, unidecode, markupsafe**
 [这里有更详细的清单](http://docs.getpelican.com/en/3.5.0/install.html)
 
 ##建立项目
 -  建立一个文件夹用来创建项目
+
 ```
 D:\code>mkdir ptest
 D:\code>cd ptest
