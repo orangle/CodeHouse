@@ -1,5 +1,5 @@
 #coding:utf-8
-#orangleliu 
+#orangleliu
 #和openresty lua-resty-string 中 aes_cbc_128_iv 方式对应
 
 def AESencrypt(password, plaintext, iv, base64=False):
