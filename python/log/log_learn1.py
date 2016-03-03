@@ -26,6 +26,26 @@ handler.setFormatter(formatter)
 loger.addHandler(handler)
 '''
 
+#3 不同级别输出到不同地方
+'''
+logger = logging.getLogger("mylog")
+formatter = logging.Formatter('%(asctime)s | %(name)s |  %(levelname)s: %(message)s')
+logger.setLevel(logging.DEBUG)
+
+stream_handler = logging.StreamHandler()
+stream_handler.setLevel(logging.INFO)
+stream_handler.setFormatter(formatter)
+
+logFilePath = "my.log"
+file_handler = logging.handlers.TimedRotatingFileHandler(filename = logFilePath, when = 'midnight', backupCount = 30)
+file_handler.setFormatter(formatter)
+file_handler.setLevel(logging.DEBUG)
+
+logger.addHandler(file_handler)
+logger.addHandler(stream_handler)
+
+'''
+
 
 
 #http://victorlin.me/posts/2012/08/26/good-logging-practice-in-python

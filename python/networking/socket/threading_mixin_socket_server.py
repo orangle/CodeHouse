@@ -11,7 +11,7 @@
 使用SocketServer的多线程模式，socket 服务器端
 '''
 
-import os 
+import os
 import socket
 import threading
 import SocketServer
@@ -42,6 +42,6 @@ if __name__ == "__main__":
    # server_thread.setDaemon(True)
     server_thread.start()
     print "server starting port 8888..."
-    
+
     time.sleep(300)
     server.socker.close()
