@@ -3,7 +3,7 @@
 #date 2015-2-9
 from twisted.internet.protocol import Protocol, Factory
 from twisted.internet import reactor
-from twisted.protocols import basic 
+from twisted.protocols import basic
 import json
 
 user_tasks = {}
