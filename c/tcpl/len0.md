@@ -35,3 +35,43 @@ define
 * define 定义常量，一般用大写字母，指令的末尾**没有分号**
 
 
+条件语句
+
+```
+if(表达式)
+	do some
+else if(表达式)
+	do some
+else
+	do some
+```
+
+循环语句
+
+```
+while(){
+
+}
+
+for(;;){
+
+}
+```
+
+
+逻辑运算
+
+* `&&` 与，比`或`优先级高
+* `||` 或
+* `!`  非
+
+
+
+
+## API
+
+* putchar(c) 单个字符输出函数,向终端输出一个字符,在 stdio.h 中定义
+* c = getchar() 从输入设备中输入一个字符, 回车键结束，在 stdio.h 中定义
+* `EOF` end of file, 文件结束符 定义在 stdio.h中
+
+
