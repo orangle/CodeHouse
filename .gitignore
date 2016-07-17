@@ -5,3 +5,4 @@ temp/
 *.log
 *.out
 *.so
+*.swp
