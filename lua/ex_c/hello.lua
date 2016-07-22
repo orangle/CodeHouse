@@ -1,4 +1,7 @@
-print("test")
+-- do not delete line in this file
+local m = require "lua_modules"
+m.go()
+
 foo = 10
 name = "lzz"
 
@@ -34,3 +37,5 @@ end
 f1()
 f2(1,2)
 f3("lzz")
+
+

@@ -1,5 +1,5 @@
-require "orangleliu"
+local sleep = require "sleep"
 
 print(os.time())
-orangleliu.sleep(1)
+sleep.sleep(1)
 print(os.time())

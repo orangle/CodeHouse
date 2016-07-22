@@ -25,3 +25,4 @@ int main(){
 
     return 1;
 }
+//gcc xxx.c -llua
