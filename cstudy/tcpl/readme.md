@@ -1,6 +1,7 @@
 语法基础要点
 ==========
 
+> [书中代码和练习题目参考](http://www.learntosolveit.com/cprogramming/)
 
 ## 类型
 
@@ -67,11 +68,17 @@ for(;;){
 
 
 
-
 ## API
 
 * putchar(c) 单个字符输出函数,向终端输出一个字符,在 stdio.h 中定义
 * c = getchar() 从输入设备中输入一个字符, 回车键结束，在 stdio.h 中定义
 * `EOF` end of file, 文件结束符 定义在 stdio.h中
 
+
+## getchar how test?
+
+```bash
+liuzhizhi@lzz-rmbp|tcpl # ./a.out <<< "HELLO"
+6
+```
 
