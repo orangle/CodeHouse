@@ -1,5 +1,5 @@
-#include <netinet/in.h> 
-#include <arpa/inet.h> 
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include <sys/socket.h>
 #include <unistd.h>
 #include <strings.h>
@@ -7,7 +7,13 @@
 #include <stdio.h>
 #include <errno.h>
 
-// 子进程的退出没有处理，资源无法释放
+/*
+ echo 服务器端
+ 采用多进程的架构
+ 
+ 子进程的退出没有处理，资源无法释放
+*/
+
 
 void str_echo(int sockfd);
 
@@ -22,7 +28,7 @@ void str_echo(int sockfd){
     char buf[1024];
 
     while( (n = read(sockfd, buf, 1024)) > 0){
-        err = write(sockfd, buf, n); 
+        err = write(sockfd, buf, n);
         if (err != n)
             err_sys("write client error");
     }
@@ -45,7 +51,7 @@ int main(void){
     servaddr.sin_port = htons(8080);
 
     if (bind(listenfd, (struct sockaddr *)&servaddr, sizeof(servaddr)) < 0){
-        err_sys("bind error");   
+        err_sys("bind error");
     }
 
     if (listen(listenfd, 10) < 0){
@@ -65,13 +71,13 @@ int main(void){
         if( (childpid = fork()) == 0) {
 
             close(listenfd);
-            str_echo(connfd); 
+            str_echo(connfd);
             exit(0);
         }
         printf("connect client host: %s port: %d\n", ipstr, port);
         close(connfd);
     }
-    
+
     return 0;
 }
 
