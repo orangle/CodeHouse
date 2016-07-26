@@ -161,7 +161,7 @@ void server(char *hostname, int aPort)
             continue; /* hope this is normally due to a child death*/
         }
 
-        printf("http: accepting new request\n"); fflush(stdout);
+        printf("http: accepting new request ------------- \n"); fflush(stdout);
 
         // process_http handles the new connect request
         // 处理新请求
@@ -335,6 +335,7 @@ void babysit_process(int fd_http, FILE *fp, int request_type, char * url)
     int total = 0;
     FILE *fp_output;
     int ioctl_flag = 1;
+    char *prog;
 
     // process environment variable stuff
     // 请求method 设置到环境变量中
@@ -375,8 +376,13 @@ void babysit_process(int fd_http, FILE *fp, int request_type, char * url)
 
     if ((pid = fork()) == 0)
     {
-       myChild(request_type, childInput[0], childOutput[1],  url);
-       exit(0);
+       //prase url get .cgi name
+        prog = strtok(url, "?");
+        if (prog[strlen(prog) - 1] == '/'){
+            prog[strlen(prog) - 1] = '\0';
+        }
+        myChild(request_type, childInput[0], childOutput[1], prog);
+        exit(0);
     }
     if (pid < 0)
        fprintf(stderr,"**** Can't fork CGI-BIN CHILD\n");
@@ -462,8 +468,8 @@ void myChild(int request_type, int fd_in, int fd_out, char * prog)
         }
 
 // Become the CGI-BIN program
+    fprintf(stderr, "execl: %s\n", prog);
     execl(prog, (char *)0);
-    fprintf(stderr, "Couldn't execl: %s\n", prog);
 }
 
 
@@ -474,7 +480,7 @@ void myChild(int request_type, int fd_in, int fd_out, char * prog)
 void processEnviron(FILE *fp,  int request_type, char * url)
 {
 
-    char *str, *str2;
+    char *str, *str2, *str3;
     char buff[10000];
     char buff2[10000];
 
@@ -483,14 +489,15 @@ void processEnviron(FILE *fp,  int request_type, char * url)
     else
     {
         putenv("REQUEST_METHOD=GET");
-
 // Split the URL into program name and QUERY_STRING
 
-        str = strchr(url, '?');
-        *str = 0; // Null terminate cgi-bin program name
-        if (str != NULL)
+        //printf("process evn url: %s\n", url);
+        str3 = strchr(url, '?');
+        //printf("str3 %s\n", str3);
+        //*str3 = 0; // Null terminate cgi-bin program name
+        if (str3 != NULL)
         {
-            sprintf(buff, "QUERY_STRING=\"%s\"", &str[1]);
+            sprintf(buff, "QUERY_STRING=\"%s\"", str3);
             putenv(strdup(buff));
         }
      }
@@ -533,7 +540,6 @@ void processEnviron(FILE *fp,  int request_type, char * url)
     } while (str != NULL);
     printf("Done Processing Headers\n\n");
 }
-
 
 // **********************************************************
 int dir_check(char * url, int fd_http)
