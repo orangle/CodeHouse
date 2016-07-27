@@ -25,6 +25,7 @@ __pycache__/
 golang/
 gin-demo/
 *.dSYM/
+**/tags
 
 AmaNda
 

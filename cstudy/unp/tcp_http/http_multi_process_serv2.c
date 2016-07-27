@@ -1,5 +1,7 @@
 /*
 url:https://gist.github.com/siritori/3070957
+
+
  */
 
 #define _USE_BSD
@@ -15,7 +17,7 @@ url:https://gist.github.com/siritori/3070957
 #include <ctype.h>
 #include <string.h>
 #include <unistd.h>
-#define DOCROOT "/public_html"
+#define DOCROOT "./"
 
 struct http_header {
    char *content_type;
@@ -168,7 +170,9 @@ int http_receive_request_and_send_reply(const int com)
    while(1) {
       char keepalive_flag = 0;
       char *filename = http_receive_request(in, &keepalive_flag);
-      const char *home = getenv("HOME");
+
+      //const char *home = getenv("HOME");
+      const char *home = "";
       const size_t pathlen = strlen(home) + strlen(DOCROOT) + strlen(filename);
       char *path = malloc(pathlen+1);
       if(path == NULL) {
@@ -342,7 +346,7 @@ void http_reply_header(FILE *out, const struct http_header *header)
          "HTTP/1.0 %s\r\n"
          "Content-Type: %s\r\n"
          "Content-Length: %d\r\n\r\n",
-      str, header->content_type, header->length);
+      str, header->content_type, (int)header->length);
    } else {
        fprintf(out, "HTTP/1.0 %s\r\n\r\n", str);
    }

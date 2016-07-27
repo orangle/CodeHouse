@@ -3,7 +3,10 @@ ref:http://space.wccnet.edu/~chasselb/linux275/ClassNotes/web/http.htm
 多进程的简单http server
 静态文件采用直接处理，cgi请求采用多进程，比较大的篇幅都是cgi的处理
 
-cgi的处理POST正常，GET有问题
+测试使用 hello.cgi
+curl  'http://127.0.0.1:8888/Makefile'
+curl  'http://127.0.0.1:8888/hello.cgi/?a=b'
+curl  'http://127.0.0.1:8888/hello.cgi'
 */
 
 #include <sys/wait.h>
