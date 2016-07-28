@@ -22,5 +22,8 @@ int main(void){
         printf("strch %s\n", str);
     }
 
+    //string cmp
+    
+
     return 0;
 }

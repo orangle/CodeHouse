@@ -10,12 +10,13 @@
 /*
  echo 服务器端
  采用多进程的架构
- 
+
  子进程的退出没有处理，资源无法释放
 */
 
-
 void str_echo(int sockfd);
+void err_sys(const char* x);
+void sig_child(int signo);
 
 void err_sys(const char* x){
     perror(x);
@@ -34,6 +35,16 @@ void str_echo(int sockfd){
     }
 }
 
+void sig_child(int signo){
+    pid_t pid;
+    int stat;
+
+    while ( (pid = waitpid(-1, &stat, WNOHANG)) > 0)
+        printf("child %d terminated\n", pid);
+
+    return;
+}
+
 int main(void){
     int listenfd, connfd;
     pid_t childpid;
@@ -45,6 +56,9 @@ int main(void){
     if((listenfd = socket(AF_INET, SOCK_STREAM, 0)) < 0){
         err_sys("socket error");
     }
+
+    signal(SIGCHLD, sig_child);
+
     bzero(&servaddr, sizeof(servaddr));
     servaddr.sin_family = AF_INET;
     servaddr.sin_addr.s_addr = htonl(INADDR_ANY);

@@ -14,7 +14,7 @@ url: https://dzone.com/articles/avoiding-application-outages-five-key-takeaways
  */
 
 /*
-  多进程处理每个请求，提供了静态文件处理和php cgi的处理
+  多进程处理每个请求，提供了静态文件处理和php cgi的处理, 用的是linux 的sendfile接口
 */
 
 #include <stdio.h>
@@ -238,8 +238,7 @@ int connection(int fd)
                             while (total_bytes_sent < length)
                             {
                                 //Zero copy optimization
-                                if ((bytes_sent = sendfile(fd, fd1, 0,
-                                                           length - total_bytes_sent)) <= 0)
+                                if ((bytes_sent = sendfile(fd, fd1, 0, length - total_bytes_sent)) <= 0)
                                 {
                                     if (errno == EINTR || errno == EAGAIN)
                                     {

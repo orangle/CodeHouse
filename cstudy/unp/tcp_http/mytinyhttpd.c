@@ -13,7 +13,7 @@
  *  5) Remove -lsocket from the Makefile.
  */
 /*
-这是一个基于多线程的web服务器，cgi处理使用进程
+这是一个基于多线程的web服务器，cgi处理使用进程(如果一个文件是可执行文件就会执行。。好吓人)
 */
 
 #include <stdio.h>
