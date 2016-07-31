@@ -9,7 +9,8 @@
 
 /*
  echo 服务器端
- 采用多进程的架构
+
+ select多路复用
 */
 
 void str_echo(int sockfd);
