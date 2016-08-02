@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <errno.h>
 
+#define MAXLINE 1024
 /*
  echo 服务器端
 
@@ -45,12 +46,17 @@ void sig_child(int signo){
 }
 
 int main(void){
-    int listenfd, connfd;
-    pid_t childpid;
+    int i, maxi, maxfd;
+    int listenfd, connfd, sockfd;
+    int nready, client[FD_SETSIZE];
+    ssize_t n;
+    char buf[1024];
     socklen_t clilen;
+    fd_set rset, allset;
     struct sockaddr_in cliaddr, servaddr;
     int port;
     char ipstr[INET_ADDRSTRLEN];
+
 
     if((listenfd = socket(AF_INET, SOCK_STREAM, 0)) < 0){
         err_sys("socket error");
@@ -71,24 +77,85 @@ int main(void){
         err_sys("listen error");
     }
 
+    //add listenfd to select 
+    maxfd = listenfd;
+    maxi = -1;
+
+    for(i=0; i<FD_SETSIZE; i++) {
+        client[i] = -1; 
+    }
+    
+    FD_ZERO(&allset);
+    FD_SET(listenfd, &allset);
+
+    printf("server listend 8080 fd_setsize: %d\n", FD_SETSIZE);
+
     for ( ; ;){
-        clilen = sizeof(cliaddr);
-        connfd = accept(listenfd, (struct sockaddr *)&cliaddr, &clilen);
-        if (connfd < 0){
-            err_sys("accept error");
+        rset = allset;        
+        nready = select(maxfd+1, &rset, NULL, NULL, NULL);
+        printf("ready fd num: %d, maxi:%d, maxfd:%d\n", nready, maxi, maxfd);
+       
+        //handler listen fd
+        if (FD_ISSET(listenfd, &rset)) {
+            clilen = sizeof(cliaddr);
+            connfd = accept(listenfd, (struct sockaddr *)&cliaddr, &clilen);
+            if (connfd < 0){
+                err_sys("accept error");
+            }
+
+            port = ntohs(cliaddr.sin_port);
+            inet_ntop(AF_INET, &cliaddr.sin_addr, ipstr, sizeof(ipstr));
+            printf("connect client host: %s port: %d\n", ipstr, port);
+            //找到一个空槽来放fd
+            for (i=0; i<FD_SETSIZE; i++) {
+                if (client[i] < 0) {
+                    client[i] = connfd;
+                    break;
+                }
+            }
+
+            if (i == FD_SETSIZE) {
+                err_sys("too many clients");
+            }
+
+            FD_SET(connfd, &allset);
+            if (connfd > maxfd) {
+                maxfd = connfd;
+            }
+
+            if (i > maxi) {
+                maxi = i;
+            }
+
+            if (--nready <= 0) {
+                continue;
+            }
         }
 
-        port = ntohs(cliaddr.sin_port);
-        inet_ntop(AF_INET, &cliaddr.sin_addr, ipstr, sizeof(ipstr));
+        for (i=0; i<=maxi; i++) {
+            if ((sockfd = client[i]) < 0) {
+                continue;
+            }
 
-        if( (childpid = fork()) == 0) {
+            if (FD_ISSET(sockfd, &rset)) {
+                if ((n = read(sockfd, buf, MAXLINE)) == 0){
+                    close(sockfd);
+                    FD_CLR(sockfd, &allset);
+                    client[i] = -1;
+                    printf("close client fd: %d\n", sockfd);
+                } else {
+                   printf("read from client -> %s", buf);
 
-            close(listenfd);
-            str_echo(connfd);
-            exit(0);
+                   if(write(sockfd, buf, n) < 0) {
+                        err_sys("write error");
+                   }
+                }
+
+                if (--nready <=0) {
+                    continue;
+                }
+            }
         }
-        printf("connect client host: %s port: %d\n", ipstr, port);
-        close(connfd);
     }
     return 0;
 }
