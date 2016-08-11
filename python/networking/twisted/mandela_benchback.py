@@ -32,7 +32,6 @@ class Ap(Protocol, TimeoutMixin):
         print "Server said:", data
 
     def timeoutConnection(self):
-        print "timeout"
         self.transport.loseConnection()
 
 
@@ -63,9 +62,4 @@ if __name__ == '__main__':
         reactor.connectTCP("localhost", 9344 , ApFactory())
 
     reactor.run()
-
-
-
-
-
 
