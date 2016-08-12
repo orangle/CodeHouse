@@ -1,8 +1,7 @@
 #coding:utf-8
 '''
 mandela 改造成rpc libray的形式来调用
-
-请求类似json，但是返回值根本不是json格式
+请求类似json，但是返回值不确定是不是json
 '''
 from __future__ import absolute_import
 import types
@@ -23,15 +22,14 @@ class JSONRPCServerProtocol(protocol.Protocol):
         self.service = service
 
     def dataReceived(self, string):
-        d = self.service.call(string)
-
+        d = self.service.call(string, self)
         def toclient(result):
             if result is not None:
                 self.transport.write(result)
         d.addCallback(toclient)
 
     def connectionLost(self, reason):
-        print "close", reason
+        pass
 
 
 class BaseServerFactory(protocol.ServerFactory):

@@ -18,15 +18,15 @@ class Ap(Protocol, TimeoutMixin):
     def connectionMade(self):
         print "I made a connection"
         pid = os.getpid()
-        #data = {"func":"login","user":"u-%s"%pid,"para":{"mac":"2c:67:fb:aa:2b:1f","hostname":"TH-NC-1205-92","tqisfull":0}}
+        data = {"func":"login","user":"u-%s"%pid,"para":{"mac":"2c:67:fb:aa:2b:1f","hostname":"TH-NC-1205-92","tqisfull":0}}
         #data ={"func":"startup","para":{"mac":"00:50:56:c0:00:08", "hostname":"BJ-1111-2222", "dtype":"wifi", "sversion":"1.1", "fversion":"33.4",
         #         "ssid": "eryawifi"}}
-        data = {'func':'add', "para": {'x':1, 'y':2}}
+        #data = {'func':'add', "para": {'x':1, 'y':2}}
         jsondata = json.dumps(data)
-        print jsondata
+        #print jsondata
         self.transport.write(jsondata)
         #self.transport.loseConnection()
-        self.setTimeout(2);
+        self.setTimeout(2)
 
     def dataReceived(self, data):
         print "Server said:", data

@@ -16,14 +16,15 @@ from twisted.protocols.policies import TimeoutMixin
 
 #from twisted.internet import ssl
 count = 0
-clients = 100
+clients = 200
 
 class Ap(Protocol, TimeoutMixin):
     def connectionMade(self):
         pid = os.getpid()
-        data = {"func":"login","user":"u-%s"%pid,"para":{"mac":"2c:67:fb:aa:2b:1f","hostname":"TH-NC-1205-92","tqisfull":0}}
+        #data = {"func":"login","user":"u-%s"%pid,"para":{"mac":"2c:67:fb:aa:2b:1f","hostname":"TH-NC-1205-92","tqisfull":0}}
         #data ={"func":"startup","para":{"mac":"00:50:56:c0:00:08", "hostname":"BJ-1111-2222", "dtype":"wifi", "sversion":"1.1", "fversion":"33.4",
         #         "ssid": "eryawifi"}}
+        data = {"func":"error", "para":{"mac":"ff:ff:ff:ff:ff:ff", "msg":"client error"}}
         self.transport.write(json.dumps(data))
         #self.transport.loseConnection()
         self.setTimeout(1);
@@ -60,6 +61,5 @@ if __name__ == '__main__':
     '''
     for i in range(clients):
         reactor.connectTCP("localhost", 9344 , ApFactory())
-
     reactor.run()
 

@@ -22,6 +22,16 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
+'''
+调用的格式为
+{
+"func":"login",
+"para": {"mac":"c8:ee:a6:03:20:a6","hostname":"CN-WLMQ-2001-22","tqisfull":0}
+}
+
+返回值的格式自定义，可能是json，也可能是文本
+'''
+
 import types
 import json
 
@@ -99,15 +109,15 @@ class JSONRPCService(object):
             i.cancel()
 
     @defer.inlineCallbacks
-    def call(self, jsondata):
-        result = yield self.call_py(jsondata)
+    def call(self, jsondata, protocal):
+        result = yield self.call_py(jsondata, protocal)
         if result is None:
             defer.returnValue(None)
         else:
             defer.returnValue(json.dumps(result))
 
     @defer.inlineCallbacks
-    def call_py(self, jsondata):
+    def call_py(self, jsondata, protocal):
         try:
             try:
                 rdata = json.loads(jsondata, strict=False)
@@ -122,6 +132,7 @@ class JSONRPCService(object):
 
         try:
             if isinstance(rdata, dict) and rdata:
+                rdata.update({"rpcconn": protocal})
                 respond = yield self._handle_request(rdata)
                 if respond is None:
                     defer.returnValue(None)
@@ -155,7 +166,9 @@ class JSONRPCService(object):
     def _call_method(self, request):
         """Calls given method with given params and returns it value."""
         method = self.method_data[request['func']]['method']
+        rpcconn = request["rpcconn"]
         params = request['para']
+        params["rpcconn"] = rpcconn
         result = None
 
         try:
@@ -213,6 +226,7 @@ class ServiceStopped(Exception):
     """
     A request was made of a stopped JSONRPCClientService.
     """
+    pass
 
 
 class JSONRPCError(Exception):
