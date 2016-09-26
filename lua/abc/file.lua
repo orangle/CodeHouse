@@ -11,14 +11,22 @@ end
 function fread()
     local file = io.open("test.txt", "r")
     if file ~= nil then
-        print(file:read())
+        print(file:read("*all"))
         file:close()
     else
         print("file not existed")
         return 0
     end
+    io.close(file)
+end
+
+--[[
+while true do
+    local lines, next = f:read(1024, "*line")
+    if not lines then bread end 
 
 end
+--]]
 
 function fremove()
     ok, err = os.remove("test.txt")
