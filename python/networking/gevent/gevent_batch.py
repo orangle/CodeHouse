@@ -22,4 +22,3 @@ for j in range(10):
     print "第%s轮攻击开始"%j
     jobs=[gevent.spawn(print_head,url,j,i) for i in range(10)]
     gevent.joinall(jobs)
-
