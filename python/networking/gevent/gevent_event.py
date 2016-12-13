@@ -23,7 +23,8 @@ def setter():
 def waiter():
     print 'wait start'
     #这个把自己的权限切出去
-    evt.wait()
+    #wait阻塞在这里 等待set动作来激活wait，1秒之后还没有set来激活就直接执行了哈
+    evt.wait(timeout=1)
     print 'wait end'
 
 

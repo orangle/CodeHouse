@@ -4,9 +4,9 @@
 function listt()
     --数组从1开始
     local nlist = {}
-    for i = 1,10 do 
+    for i = 1,10 do
         nlist[i] = i
-    end 
+    end
     print(#nlist)
 end
 
@@ -27,6 +27,19 @@ function maxntb()
 end
 
 
+function sorttb()
+    lines = {
+      name = 'lzz',
+      age = '18',
+    }
+    a = {}
+    for n in pairs(lines) do table.insert(a, n) end
+    table.sort(a)
+    for _,n in ipairs(a) do print(n,lines[n]) end
+end
+
+
 --listt()
 --concattb()
-maxntb()
+--maxntb()
+sorttb()

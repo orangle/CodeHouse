@@ -12,6 +12,7 @@
 
 import sys
 import time
+import logging
 import gevent
 from gevent.queue import Queue
 from gevent import monkey
@@ -19,6 +20,9 @@ from gevent import monkey
 monkey.patch_all()
 
 import urllib2
+
+logger = logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 # 生产者产生的内容, 消费者就是抓取这些网页
@@ -48,10 +52,13 @@ def worker(name):
         if t == '##stop':
             break
         print 'worker {0} get {1}'.format(name, t)
-        opener = urllib2.build_opener()
-        opener.addheaders = [('User-agent', 'Mozilla/5.0')]
-        r = opener.open(t)
-        print 'worker {0}'.format(name) + r.read()[:20]
+        try:
+            opener = urllib2.build_opener()
+            opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+            r = opener.open(t)
+            print 'worker {0}'.format(name) + r.read()[:40]
+        except Exception as e:
+            logger.error('worker urllib2 error', exc_info=True)
         gevent.sleep(0)
     print "worker exit"
 
@@ -79,4 +86,4 @@ def get_sms():
         gevent.sleep(0)
 
 
-gevent.joinall([gevent.spawn(worker, i) for i in range(worknum)] + gevent.spawn(get_sms()))
+gevent.joinall([gevent.spawn(worker, i) for i in range(worknum)] + [gevent.spawn(get_sms)])
