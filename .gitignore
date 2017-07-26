@@ -21,6 +21,10 @@ __pycache__/
 .DS_Store
 *.out
 *.log
+*.beam
+*.tab.c
+*.tab.h
+lex.yy.c
 
 golang/
 gin-demo/
