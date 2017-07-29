@@ -1,0 +1,25 @@
+vue js
+=======
+
+主要目的是为了学习怎么做前后端的分离，以及后端接口的复用性问题，
+因为没有给力的前端配合只好自己来了, 还有就是看看前端工程化的效率如何.
+
+
+* vue 怎么绑定？
+* vue 怎么做页面切换？
+* vue 怎么做 ajax 请求调用？
+* django vue 完成一个登录的案例
+* django restframework 完成一个接口调用 table, form
+
+
+demo的版本信息
+* python 2.7
+* django 1.10
+* djangorestframework 3.6.3
+
+
+## 参考地址
+
+* vue官网
+* vue 教程 https://dev.to/rpalo/vue-on-django-part-1
+
