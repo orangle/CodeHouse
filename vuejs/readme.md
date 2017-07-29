@@ -23,3 +23,19 @@ demo的版本信息
 * vue官网
 * vue 教程 https://dev.to/rpalo/vue-on-django-part-1
 
+
+## 问题记录
+
+* 去掉代码风格检查，暂时先不看风格，虽然我很重视这个事情
+
+build 目录下 webpack.base.conf.js 文件中 eslint 相关配置
+
+
+
+
+
+
+
+
+
+
