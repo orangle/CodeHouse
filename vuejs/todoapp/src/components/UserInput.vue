@@ -14,10 +14,11 @@ export default {
 	},
 	methods: {
 		createTodo () {
-			console.log(this.newTodoText, 'create!')
+			this.$store.dispatch('addTodo', {text: this.newTodoText})
+			this.newTodoText = ''
 		},
 		clearTodos () {
-			console.log('Todos cleared!')
+			this.$store.dispatch('clearTodos')
 		}
 	}
 }

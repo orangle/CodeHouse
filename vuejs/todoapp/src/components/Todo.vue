@@ -1,7 +1,7 @@
 <template>
-	<p>
+	<li>
 		{{ todo.text }}
-	</p>
+	</li>
 </template>
 
 <script>
