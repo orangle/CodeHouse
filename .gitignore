@@ -25,6 +25,7 @@ __pycache__/
 *.tab.c
 *.tab.h
 lex.yy.c
+db.sqlite3
 
 golang/
 gin-demo/
