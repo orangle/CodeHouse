@@ -21,7 +21,12 @@ demo的版本信息
 ## 参考地址
 
 * vue官网
-* vue 教程 https://dev.to/rpalo/vue-on-django-part-1
+* vue 教程, django vue的一个小教程
+	- https://dev.to/rpalo/vue-on-django-part-1
+	- https://dev.to/rpalo/vue-on-django-part-2
+	- https://dev.to/rpalo/vue-on-django-part-3
+	- https://dev.to/rpalo/vue-on-django-part-4
+* 一个博客 http://www.cnblogs.com/keepfool/category/845804.html 看起来还不错
 
 
 ## 问题记录
