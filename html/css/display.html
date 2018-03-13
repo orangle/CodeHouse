@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>display</title>
+</head>
+<body>
+    <div style="display:block; border:red 1px solid">
+        div 是一个标准的块级元素，一个块级元素会新开始一行并近可能的充满容器。常见的块级元素有 p, form等
+
+        <p>inline是什么样的呢？ 例如 span元素 <span>span中的文字</span> 不会重新占用一行 </p>
+    </div>
+
+    <div style="visibility:hidden"> 
+        占位1
+    </div>
+    <!-- <div style="display:none">
+        占位2
+    </div> -->
+    <div>
+        `display:none` 不会占用页面的位置， `visiblilty:hidden` 还会占用原来的页面位置，只是变成空白了
+    </div>
+</body>
+</html>

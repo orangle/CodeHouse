@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>box model</title>
+</head>
+<body>
+    <style>
+        div {
+        border: blue 1px solid;
+        }
+        .simple{
+            width: 500px;
+            margin: 20px auto;
+        }
+        .fancy{
+            width: 500px;
+            margin: 20px auto;
+            padding: 50px;
+            border-width: 10px;
+        }
+        .simple-fix {
+            width: 500px;
+            margin: 20px auto;
+            box-sizing: border-box;
+        }
+        .fancy-fix {
+            width: 500px;
+            margin: 20px auto;
+            padding: 50px;
+            border-width: 10px;
+            box-sizing: border-box;
+        }
+    </style> 
+
+    <div class="simple">I am smaller</div>
+
+    <div class="fancy">I am bigger 主要是padding和boder都被扩出来了，所以看起来大了很多</div>
+
+    <hr>
+    <div class="simple-fix">I am smaller</div>
+
+    <div class="fancy-fix">I am bigger fixed version</div>
+</body>
+</html>
