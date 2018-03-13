@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>position</title>
+</head>
+<style>
+    div{
+        border: blue 1px solid;
+    }
+    .static{
+        position: static;
+    }
+    .relative1 {
+        position: relative;
+    }
+    .relative2 {
+        position: relative;
+        top: -20px;
+        left: 20px;
+        background-color: #505179;
+        width: 500px;
+    }
+    .fixed {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        width: 200px;
+        background-color: yellow;
+    }
+    .relative{
+        position: relative;
+        width: 600px;
+        height: 400px;
+    }
+    .absolute{
+        position: absolute;
+        top: 120px;
+        right: 0px;
+        width: 300px;
+        height: 200px;
+    }
+</style>
+<body>
+    <div class="relative1">
+        这个时候看不出来和static什么不一样
+        <p>mid</p>
+        <p>mid</p>
+    </div>
+    <div class="relative2">
+        在一个相对的元素上设置 top, right, left, bottom 属性会让它偏离正常的位置
+    </div>
+    <div class="fixed">
+        hello! 我在最下面啦
+        <p>hello2</p>
+    </div>
+
+    <hr>
+    <div class="relative">
+        父盒子
+        <div class="absolute">
+            我在这里，绝对位置和父容器相关
+        </div>
+    </div>
+</body>
+</html>
