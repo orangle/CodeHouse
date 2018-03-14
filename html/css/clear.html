@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>clear</title>
+</head>
+<style>
+    .box {
+        float: left;
+        width: 200px;
+        height: 100px;
+        border: rgb(204, 15, 221) 1px solid;
+        margin: 1em;
+    } 
+    section {
+        border: yellow 1px solid;
+    }
+    .after-box {
+        clear: left;
+    }
+    .clear {
+        clear: both;
+    }
+</style>
+<body>
+    <div class="box">
+            我是个漂浮的box
+    </div>
+    <section> 
+        <p>section是在box之后的</p>
+    </section>
+
+    <p class="clear">
+        <hr>
+    </p>
+
+    <div class="box">
+            我是个漂浮的box
+    </div>
+    <section class="after-box"> 
+        <p>section是在box之后的</p>
+    </section> 
+
+</body>
+</html>

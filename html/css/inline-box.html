@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>float-layout</title>
+</head>
+<style>
+    .container {
+        position: relative;
+    }
+    nav {
+        display: inline-block;
+        vertical-align: top;
+        background-color: blueviolet;
+        width: 25%;
+    }
+    section {
+        background-color: chartreuse; 
+    }
+    .clearfix {
+        overflow: auto;
+        zoom:1;
+    }
+    li {
+        display: list-item;
+    }
+    .column {
+        display: inline-block;
+        vertical-align: top;
+        width: 75%;
+    }
+
+</style>
+<body>
+    <p>没有实现，有问题</p>
+     <div class="container">
+         <nav>
+            <li>设备</li> 
+            <li>位置</li>
+            <li>用户</li>
+         </nav>
+         <div class="column">
+            <section>
+                <p>今天的雾霾还没有散</p>
+                <p>今天的雾霾还没有散</p>
+                <p>今天的雾霾还没有散</p>
+            </section>
+            <section>
+                <p>TVB kan qilai bu xingle</p>
+            </section>
+         </div>
+     </div>
+</body>
+</html>

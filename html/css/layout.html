@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>layout</title>
+</head>
+<style>
+    div{
+        border: blue 1px solid;
+    }
+    .container {
+        position: relative;
+    }
+    nav {
+        position: absolute;
+        left: 0px;
+        width: 200px;
+    }
+    section {
+        margin-left: 200px;
+        border: yellow 1px solid;
+    }
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        height: 70px;
+        background-color: rgb(71, 61, 214);
+        width: 100%;
+    }
+    body {
+        margin-bottom: 120px;
+    }
+    li {
+        display: list-item;
+    }
+</style>
+<body>
+    <div class="container">
+        <nav>
+            <li>设备</li> 
+            <li>位置</li>
+            <li>用户</li>
+        </nav>
+        
+        <section>
+            第一段
+            <p>MID</p>
+        </section>
+        <section>
+            第二段
+            <p>mid</p>
+        </section>
+        <section>
+            第三段
+            <p>mid</p>
+        </section>
+
+        <footer>
+            <p>i am here</p>
+        </footer>
+    </div>
+</body>
+</html>

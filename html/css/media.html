@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>media</title>
+</head>
+<style>
+    .container {
+        position: relative;
+    }
+    li {
+        display: list-item;
+    }
+    @media screen and (min-width: 600px){
+        nav {
+            float: left;
+            width: 25%;
+            border: blue 1px solid;
+        }
+        section {
+            margin-left: 25%;
+            border: yellow 1px solid;
+        }
+    }
+    @media screen and (max-width:599px) {
+        nav li {
+            display: none;
+        } 
+    }
+</style>
+<body>
+    <div class="container">
+            <nav>
+                <li>设备</li> 
+                <li>位置</li>
+                <li>用户</li>
+            </nav>
+            
+            <section>
+                第一段
+                <p>MID</p>
+            </section>
+            <section>
+                第二段
+                <p>mid</p>
+            </section>
+            <section>
+                第三段
+                <p>mid</p>
+            </section>
+        </div> 
+</body>
+</html>
