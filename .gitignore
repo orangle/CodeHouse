@@ -1,5 +1,6 @@
 ﻿
 *.pyc
+*.vscode
 excel/
 temp/
 *.log
@@ -25,6 +26,7 @@ __pycache__/
 *.beam
 *.tab.c
 *.tab.h
+**/pdf/*.pdf
 lex.yy.c
 db.sqlite3
 
