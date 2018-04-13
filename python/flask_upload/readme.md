@@ -46,7 +46,8 @@ python chunk_upload.py
 
 `chunk` 下载文件
 ```
-python chunk_download.py```
+python chunk_download.py
+```
 
 
 ### thks 
