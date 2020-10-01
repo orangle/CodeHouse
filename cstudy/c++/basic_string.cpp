@@ -1,3 +1,5 @@
+//program to copy one string to another , join two strings, find length of the string
+
 #include<iostream>
 #include<cstring>
 
